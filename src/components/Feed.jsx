@@ -1,7 +1,7 @@
-export const Feed = () => {
+export const Feed = ({ post }) => {
     return (
         <div className="feed">
-            Feed
+            {post}
         </div>
     )
 }

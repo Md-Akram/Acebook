@@ -4,25 +4,23 @@ import { Auth } from './components/Auth'
 import { Feed } from './components/Feed'
 import { LeftSideBar } from './components/LeftSideBar'
 import { Navbar } from './components/Navbar'
-import Cookies from 'universal-cookie/cjs/Cookies'
-
-const cookies = new Cookies()
 
 function App() {
-  const [isAuth, setIsAuth] = useState(cookies.get('auth-token'))
+  const [user, setUser] = useState()
+  const [post, setPost] = useState()
 
-  if (!isAuth) {
+  if (!user) {
     return (
       <div className="App">
-        <Auth />
+        <Auth setUser={setUser} />
       </div>
     )
   } else {
     return (
       <div className="app">
         <Navbar />
-        <Feed />
-        <LeftSideBar />
+        <Feed post={post} />
+        <LeftSideBar setPost={setPost} />
 
       </div>
     )

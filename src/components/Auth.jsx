@@ -1,18 +1,17 @@
 import { auth, provider } from "../firebase-config"
-import { signInWithPopup } from 'firebase/auth'
-import Cookies from "universal-cookie"
+import { browserSessionPersistence, setPersistence, signInWithPopup } from 'firebase/auth'
 
-const cookies = new Cookies()
 
-export const Auth = () => {
-    const signInWithGoogle = async () => {
-        try {
-            const result = await signInWithPopup(auth, provider)
-            cookies.set('auth-token', result.user.refreshToken)
-
-        } catch (err) {
-            console.error(err)
-        }
+export const Auth = ({ setUser }) => {
+    const signInWithGoogle = () => {
+        setPersistence(auth, browserSessionPersistence)
+            .then(() => {
+                return signInWithPopup(auth, provider)
+            }).then((result) => {
+                setUser(result.user)
+            }).catch((error) => {
+                console.error(error)
+            })
     }
     return (
         <div className="auth">
