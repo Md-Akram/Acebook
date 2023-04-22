@@ -1,26 +1,24 @@
-import { auth, provider } from "../firebase-config"
-import { browserSessionPersistence, setPersistence, signInWithPopup } from 'firebase/auth'
+import { auth } from "./firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 
-export const Auth = ({ setUser }) => {
+export const Auth = () => {
     const signInWithGoogle = () => {
-        setPersistence(auth, browserSessionPersistence)
-            .then(() => {
-                return signInWithPopup(auth, provider)
-            }).then((result) => {
-                setUser(result.user)
+        const provider = new GoogleAuthProvider()
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                console.log(user);
             }).catch((error) => {
-                console.error(error)
-            })
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+            });
     }
     return (
-        <div className="auth">
-            <p>
-                Sign in with Google to continue
-            </p>
-            <button className="button" onClick={signInWithGoogle}>
-                Sign in with Google
-            </button>
-        </div>
-    )
+        <button onClick={signInWithGoogle}>Sign in with Google</button>
+    );
 }
