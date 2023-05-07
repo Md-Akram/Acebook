@@ -5,6 +5,10 @@ export const Feed = () => {
         <div className="w-full md:w-3/4 bg-white p-4">
             <Post />
             <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
         </div>
     )
 }

@@ -7,7 +7,7 @@ export const Home = ({ user }) => {
     return (
         <>
             <Navbar user={user} />
-            <div className="flex flex-col md:flex-row ">
+            <div className="flex flex-col md:flex-row">
                 <LeftSideBar />
                 <Feed />
             </div>
