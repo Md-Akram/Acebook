@@ -8,7 +8,7 @@ export const Home = ({ user }) => {
         <>
             <Navbar user={user} />
             <div className="flex flex-col md:flex-row">
-                <LeftSideBar />
+                <LeftSideBar user={user} />
                 <Feed />
             </div>
         </>

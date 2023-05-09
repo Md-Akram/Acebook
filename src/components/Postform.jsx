@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { getDatabase, ref, set } from "firebase/database";
 
-function PostForm() {
+
+function PostForm({ user }) {
     const [postContent, setPostContent] = useState("");
+
+    const uid = crypto.randomUUID();
 
     const handlePostContentChange = (e) => {
         setPostContent(e.target.value);
@@ -9,10 +13,19 @@ function PostForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Do something with the post content, such as submitting it to Firebase
+        writeUserData(uid, postContent)
         console.log(postContent);
         setPostContent("");
     };
+
+    const writeUserData = (uid, postContent) => {
+        const db = getDatabase();
+        set(ref(db, 'posts/' + uid), {
+            ...user,
+            postContent: postContent,
+        });
+    }
+
 
     return (
         <div className="w-full md:w-1/4 bg-gray-100 py-4 px-4 h-full">

@@ -1,8 +1,8 @@
 import PostForm from "./Postform"
 
-export const LeftSideBar = () => {
+export const LeftSideBar = ({ user }) => {
     return (
-        <PostForm />
+        <PostForm user={user} />
 
     )
 }
